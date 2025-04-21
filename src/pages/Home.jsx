@@ -3,11 +3,17 @@ import Container from '../components/Container/Container';
 import Heading from '../components/Heading/Heading';
 import ExchangeForm from '../components/ExchangeForm/ExchangeForm';
 import { useSelector } from 'react-redux';
-import { selectExchangeInfo } from '../redux/currency/selectors';
+import {
+  selectExchangeInfo,
+  selectIsError,
+  selectIsLoading,
+} from '../redux/currency/selectors';
 import ExchangeInfo from '../components/ExchangeInfo/ExchangeInfo';
+import Loader from '../components/Loader/Loader';
 
 const Home = () => {
-  const isError = false;
+  const isError = useSelector(selectIsError);
+  const isLoading = useSelector(selectIsLoading);
   const exchengeInfo = useSelector(selectExchangeInfo);
 
   return (
@@ -21,6 +27,7 @@ const Home = () => {
 
         <ExchangeForm />
 
+        {isLoading && <Loader />}
         {exchengeInfo && <ExchangeInfo />}
 
         {isError && (

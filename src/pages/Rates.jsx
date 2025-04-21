@@ -1,11 +1,28 @@
 import { Wave } from 'react-animated-text';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  selectCurrency,
+  selectFilteredRates,
+  selectIsError,
+} from '../redux/currency/selectors';
 
 import Section from '../components/Section/Section';
 import Container from '../components/Container/Container';
 import Heading from '../components/Heading/Heading';
+import { getCurrentExchangeRates } from '../redux/currency/operations';
+import RatesList from '../components/RatesList/RatesList';
 
 const Rates = () => {
-  const isError = false;
+  const dispatch = useDispatch();
+
+  const baseCurrency = useSelector(selectCurrency);
+  const filteredRates = useSelector(selectFilteredRates);
+  const isError = useSelector(selectIsError);
+
+  useEffect(() => {
+    dispatch(getCurrentExchangeRates(baseCurrency));
+  }, [dispatch, baseCurrency]);
 
   return (
     <Section>
@@ -21,6 +38,8 @@ const Rates = () => {
             />
           }
         />
+
+        {filteredRates.length > 0 && <RatesList />}
 
         {isError && (
           <Heading

@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import currencyReducer from './currency/slice';
+import filtersReducer from './filters/slice';
 import {
   persistStore,
   persistReducer,
@@ -24,6 +25,7 @@ const persistedCurrencyReducer = persistReducer(persistConfig, currencyReducer);
 export const store = configureStore({
   reducer: {
     currency: persistedCurrencyReducer,
+    filters: filtersReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

@@ -5,6 +5,7 @@ import {
   selectCurrency,
   selectFilteredRates,
   selectIsError,
+  selectIsLoading,
 } from '../redux/currency/selectors';
 
 import Section from '../components/Section/Section';
@@ -12,6 +13,8 @@ import Container from '../components/Container/Container';
 import Heading from '../components/Heading/Heading';
 import { getCurrentExchangeRates } from '../redux/currency/operations';
 import RatesList from '../components/RatesList/RatesList';
+import Loader from '../components/Loader/Loader';
+import Filter from '../components/Filter/Filter';
 
 const Rates = () => {
   const dispatch = useDispatch();
@@ -19,6 +22,7 @@ const Rates = () => {
   const baseCurrency = useSelector(selectCurrency);
   const filteredRates = useSelector(selectFilteredRates);
   const isError = useSelector(selectIsError);
+  const isLoading = useSelector(selectIsLoading);
 
   useEffect(() => {
     dispatch(getCurrentExchangeRates(baseCurrency));
@@ -39,6 +43,9 @@ const Rates = () => {
           }
         />
 
+        <Filter />
+
+        {isLoading && <Loader />}
         {filteredRates.length > 0 && <RatesList />}
 
         {isError && (

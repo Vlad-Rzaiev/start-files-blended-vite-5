@@ -6,6 +6,7 @@ import { selectCurrency } from '../../redux/currency/selectors';
 import { MdCurrencyExchange } from 'react-icons/md';
 
 import styles from './Header.module.css';
+import SelectRates from '../SelectRates/SelectRates';
 
 const Header = () => {
   const currency = useSelector(selectCurrency);
@@ -35,6 +36,8 @@ const Header = () => {
           <p className={styles.currency}>Your base currency: {currency}</p>
         )}
       </header>
+
+      <SelectRates />
       <Suspense fallback={null}>
         <Outlet />
       </Suspense>
